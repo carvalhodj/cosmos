@@ -1,29 +1,26 @@
 ;
 ;   A simple boot sector program that demonstrates the stack.
 ;
+mov bx, 50
 
-mov ah, 0x0E
+cmp bx, 4
+jle le_4
+cmp bx, 40
+jl less_40
+mov al, 'C'
+jmp the_end
 
-mov bp, 0x8000
-mov sp, bp
+le_4:
+    mov al, 'A'
+    jmp the_end
 
-push 'A'
-push 'B'
-push 'C'
+less_40:
+    mov al, 'B'
+    jmp the_end
 
-mov al, [0x7FFA]
-int 0x10
-
-pop bx
-mov al, bl
-int 0x10
-
-pop bx
-mov al, bl
-int 0x10
-
-mov al, [0x7FFE]
-int 0x10
+the_end:
+    mov ah, 0x0E
+    int 0x10
 
 jmp $
 

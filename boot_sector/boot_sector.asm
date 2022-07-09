@@ -1,28 +1,23 @@
 ;
 ;   A simple boot sector program that demonstrates the stack.
 ;
-mov bx, 50
+[org 0x7C00]
 
-cmp bx, 4
-jle le_4
-cmp bx, 40
-jl less_40
-mov al, 'C'
-jmp the_end
+mov bx, HELLO_MSG
+call print_string
 
-le_4:
-    mov al, 'A'
-    jmp the_end
-
-less_40:
-    mov al, 'B'
-    jmp the_end
-
-the_end:
-    mov ah, 0x0E
-    int 0x10
+mov bx, GOODBYE_MSG
+call print_string
 
 jmp $
+
+%include "print_string.asm"
+
+HELLO_MSG:
+    db 'Hello, World!', 0
+
+GOODBYE_MSG:
+    db 'Goodbye!', 0
 
 ;
 ;   Padding and magic BIOS number

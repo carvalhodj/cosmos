@@ -2,6 +2,8 @@
 ;   A simple boot sector program that demonstrates addressing.
 ;
 
+[org 0x7c00]
+
 mov ah, 0x0E
 
 ; First attempt
@@ -19,7 +21,7 @@ mov al, [bx]
 int 0x10
 
 ; Fourth attempt
-mov al, [0x7C1E]
+mov al, [0x7C1D]
 int 0x10
 
 jmp $

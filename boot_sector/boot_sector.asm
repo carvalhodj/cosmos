@@ -1,35 +1,31 @@
 ;
-;   A simple boot sector that prints a message to the screen using a BIOS routine.
+;   A simple boot sector program that demonstrates addressing.
 ;
 
 mov ah, 0x0E
 
-mov al, 'H'
+; First attempt
+mov al, the_secret
 int 0x10
-mov al, 'e'
+
+; Second attempt
+mov al, [the_secret]
 int 0x10
-mov al, 'l'
+
+; Third attempt
+mov bx, the_secret
+add bx, 0x7C00
+mov al, [bx]
 int 0x10
-mov al, 'l'
-int 0x10
-mov al, 'o'
-int 0x10
-mov al, ' '
-int 0x10
-mov al, 'c'
-int 0x10
-mov al, 'o'
-int 0x10
-mov al, 's'
-int 0x10
-mov al, 'm'
-int 0x10
-mov al, 'o'
-int 0x10
-mov al, 's'
+
+; Fourth attempt
+mov al, [0x7C1E]
 int 0x10
 
 jmp $
+
+the_secret:
+    db "X"
 
 ;
 ;   Padding and magic BIOS number

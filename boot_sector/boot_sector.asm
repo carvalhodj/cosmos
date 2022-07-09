@@ -1,33 +1,31 @@
 ;
-;   A simple boot sector program that demonstrates addressing.
+;   A simple boot sector program that demonstrates the stack.
 ;
-
-[org 0x7c00]
 
 mov ah, 0x0E
 
-; First attempt
-mov al, the_secret
+mov bp, 0x8000
+mov sp, bp
+
+push 'A'
+push 'B'
+push 'C'
+
+mov al, [0x7FFA]
 int 0x10
 
-; Second attempt
-mov al, [the_secret]
+pop bx
+mov al, bl
 int 0x10
 
-; Third attempt
-mov bx, the_secret
-add bx, 0x7C00
-mov al, [bx]
+pop bx
+mov al, bl
 int 0x10
 
-; Fourth attempt
-mov al, [0x7C1D]
+mov al, [0x7FFE]
 int 0x10
 
 jmp $
-
-the_secret:
-    db "X"
 
 ;
 ;   Padding and magic BIOS number
